@@ -26,6 +26,11 @@ Open `index.html` directly in a browser. There is nothing to install or build.
 
 - Named functions, no frameworks, no classes.
 - Colors are CSS custom properties on `:root`, with dark-mode overrides.
+- Design system (from the ui-ux-pro-max "Banking / Traditional Finance" profile and the frontend-design skill): trust navy with gold reserved for the primary action and focus, Bahnschrift for headings and numbers, Segoe UI for body, sentence-case labels, 44px minimum control height. The masthead's proportional status bar is the one bold element; keep the rest quiet.
+
+## Project skills
+
+`.claude/skills/` holds frontend-design, ui-ux-pro-max and cybersecurity-analyst. Use the first two for UI changes and the third for the security scan in `/publish`. The ui-ux-pro-max search script needs Python 3.
 - Keep the app accessible: semantic landmarks, labelled controls, visible focus, `aria-live` for the summary and form status.
 
 ## Publishing
