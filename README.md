@@ -13,6 +13,7 @@ A Kanban board for tracking UOB IT PMO tasks across Backlog, In Progress, Blocke
 - Filter by project, assignee and priority; a live summary strip shows the counts
 - Inline delete confirmation
 - 8 sample tasks; nothing is stored, so a refresh resets the board
+- Floating WhatsApp IT support button (bottom right): pick a common IT query and WhatsApp opens a chat to +65 9159 3440 with the message prefilled
 - Accessible markup, visible focus, light and dark themes
 
 ## Run locally

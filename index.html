@@ -36,6 +36,9 @@
   --seg-inprogress: #1d4ed8;
   --seg-blocked: #c2410c;
   --seg-done: #15803d;
+  --wa: #1a9e4b;
+  --wa-dark: #075e54;
+  --wa-soft: #e8f7ee;
   --font-display: Bahnschrift, "DIN Alternate", "Segoe UI", system-ui, sans-serif;
   --font-body: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
@@ -46,7 +49,7 @@
     --line: #2a3850; --navy: #060b16; --navy-ink: #f1f5f9; --trust: #93b4ff; --gold: #d4a017; --gold-ink: #0b1220;
     --focus: #facc15; --p-critical: #f87171; --p-high: #fb923c; --p-medium: #7aa2ff; --p-low: #94a3b8;
     --danger: #f87171; --danger-soft: #3b1a1a;
-    --seg-backlog: #64748b; --seg-inprogress: #3b6cf0; --seg-blocked: #d9622b; --seg-done: #22a35a;
+    --seg-backlog: #64748b; --seg-inprogress: #3b6cf0; --seg-blocked: #d9622b; --seg-done: #22a35a; --wa: #1a9e4b; --wa-dark: #0b6b5f; --wa-soft: #12321f;
     color-scheme: dark;
   }
 }
@@ -55,10 +58,11 @@
   --line: #2a3850; --navy: #060b16; --navy-ink: #f1f5f9; --trust: #93b4ff; --gold: #d4a017; --gold-ink: #0b1220;
   --focus: #facc15; --p-critical: #f87171; --p-high: #fb923c; --p-medium: #7aa2ff; --p-low: #94a3b8;
   --danger: #f87171; --danger-soft: #3b1a1a;
-  --seg-backlog: #64748b; --seg-inprogress: #3b6cf0; --seg-blocked: #d9622b; --seg-done: #22a35a;
+  --seg-backlog: #64748b; --seg-inprogress: #3b6cf0; --seg-blocked: #d9622b; --seg-done: #22a35a; --wa: #1a9e4b; --wa-dark: #0b6b5f; --wa-soft: #12321f;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--font-body); }
 button, input, select { font: inherit; color: inherit; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
@@ -147,6 +151,24 @@ button, input, select { font: inherit; color: inherit; }
 .btn-delete:hover { border-color: var(--danger); }
 .confirm { margin-top: var(--space-2); padding: var(--space-2) var(--space-3); background: var(--danger-soft); display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; font-size: .9rem; }
 .confirm span { flex: 1 1 100%; font-weight: 600; }
+/* WhatsApp IT support widget */
+main.board { padding-bottom: 96px; }
+.wa { position: fixed; right: max(var(--space-4), env(safe-area-inset-right, 0px)); bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px)); z-index: 50; display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-3); }
+.wa-toggle { width: 60px; height: 60px; border-radius: 50%; border: 0; background: var(--wa); color: #fff; cursor: pointer; display: grid; place-items: center; box-shadow: 0 6px 18px rgba(15, 23, 42, .3); transition: transform .15s; }
+.wa-toggle:hover { transform: scale(1.05); }
+.wa-toggle svg { width: 32px; height: 32px; }
+.wa-panel { width: min(360px, calc(100vw - 2 * var(--space-4))); max-height: min(70vh, 560px); display: flex; flex-direction: column; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 12px 32px rgba(15, 23, 42, .28); overflow: hidden; }
+.wa-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-2); padding: var(--space-3) var(--space-4); background: var(--wa-dark); color: #fff; }
+.wa-head h2 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; }
+.wa-head p { margin: 2px 0 0; font-size: .85rem; opacity: .9; }
+.wa-close { min-width: 44px; min-height: 44px; margin: -8px -10px 0 0; border: 0; background: transparent; color: #fff; font-size: 1.4rem; line-height: 1; cursor: pointer; }
+.wa-intro { margin: 0; padding: var(--space-3) var(--space-4) var(--space-2); font-size: .9rem; color: var(--ink-soft); }
+.wa-list { list-style: none; margin: 0; padding: 0 var(--space-3) var(--space-3); overflow-y: auto; display: flex; flex-direction: column; gap: var(--space-2); }
+.wa-list a { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: 44px; padding: var(--space-2) var(--space-3); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); text-decoration: none; font-size: .92rem; }
+.wa-list a:hover { border-color: var(--wa); background: var(--wa-soft); }
+.wa-list a::after { content: ""; flex: 0 0 8px; height: 8px; border-top: 2px solid var(--wa-dark); border-right: 2px solid var(--wa-dark); transform: rotate(45deg); }
+.wa-list .wa-free { border-style: dashed; }
+.wa-foot { margin: 0; padding: var(--space-2) var(--space-4) var(--space-3); font-size: .78rem; color: var(--ink-soft); border-top: 1px solid var(--line); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -234,6 +256,24 @@ button, input, select { font: inherit; color: inherit; }
 </section>
 
 <main class="board wrap" id="board"></main>
+
+<aside class="wa" aria-label="IT support on WhatsApp">
+  <section class="wa-panel" id="wa-panel" aria-labelledby="wa-heading" hidden>
+    <div class="wa-head">
+      <div>
+        <h2 id="wa-heading">IT Support</h2>
+        <p>Chat with us on WhatsApp</p>
+      </div>
+      <button type="button" class="wa-close" id="wa-close" aria-label="Close IT support">&times;</button>
+    </div>
+    <p class="wa-intro">Pick a topic and WhatsApp opens with your message ready to send.</p>
+    <ul class="wa-list" id="wa-list"></ul>
+    <p class="wa-foot">Opens WhatsApp in a new tab. Nothing is sent until you press send there.</p>
+  </section>
+  <button type="button" class="wa-toggle" id="wa-toggle" aria-expanded="false" aria-controls="wa-panel" aria-label="Open IT support on WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2.1 7L3 29l6.4-2c2 1.1 4.3 1.6 6.6 1.6 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.3c-2.1 0-4.1-.6-5.9-1.7l-.4-.3-3.8 1.2 1.2-3.7-.3-.4c-1.2-1.8-1.9-3.9-1.9-6.1C4.9 9.8 9.9 5 16 5s11.1 4.8 11.1 10.8S22.1 26.3 16 26.3zm6.1-8c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.5c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1 2.9 1.1 3.5.9 4.1.9.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.2-.4-.3-.7-.4z"/></svg>
+  </button>
+</aside>
 
 <script>
 "use strict";
@@ -569,6 +609,48 @@ function clearFilters() {
   handleFilterChange();
 }
 
+/* WhatsApp IT support: each topic opens wa.me with the message prefilled. */
+const WHATSAPP_NUMBER = "6591593440";
+const SUPPORT_QUERIES = [
+  "I can't log in or need a password reset",
+  "My VPN won't connect",
+  "Outlook or email isn't syncing",
+  "I need access to a system or shared drive",
+  "My laptop or hardware has a problem",
+  "I'd like to report a phishing email",
+  "I need software installed",
+  "The printer isn't working",
+  "What's the status of my IT ticket?"
+];
+
+function whatsappLink(message) {
+  return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+}
+
+function renderSupportQueries() {
+  const items = SUPPORT_QUERIES.map(function (query) {
+    return '<li><a href="' + escapeHtml(whatsappLink("Hi IT Support, " + query + ".")) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(query) + "</a></li>";
+  });
+  items.push('<li><a class="wa-free" href="' + escapeHtml(whatsappLink("Hi IT Support, ")) + '" target="_blank" rel="noopener noreferrer">Something else? Start a chat</a></li>');
+  document.getElementById("wa-list").innerHTML = items.join("");
+}
+
+function toggleSupportPanel(open) {
+  const panel = document.getElementById("wa-panel");
+  const toggle = document.getElementById("wa-toggle");
+  panel.hidden = !open;
+  toggle.setAttribute("aria-expanded", String(open));
+  toggle.setAttribute("aria-label", open ? "Close IT support" : "Open IT support on WhatsApp");
+  if (open) document.querySelector("#wa-list a").focus();
+}
+
+function handleSupportKeydown(event) {
+  if (event.key === "Escape" && !document.getElementById("wa-panel").hidden) {
+    toggleSupportPanel(false);
+    document.getElementById("wa-toggle").focus();
+  }
+}
+
 function init() {
   const form = document.getElementById("add-form");
   fillSelect(form.elements.project, PROJECTS, "Choose a project");
@@ -596,6 +678,16 @@ function init() {
   document.getElementById("filter-assignee").addEventListener("input", handleFilterChange);
   document.getElementById("filter-priority").addEventListener("change", handleFilterChange);
   document.getElementById("filter-clear").addEventListener("click", clearFilters);
+
+  renderSupportQueries();
+  document.getElementById("wa-toggle").addEventListener("click", function () {
+    toggleSupportPanel(document.getElementById("wa-panel").hidden);
+  });
+  document.getElementById("wa-close").addEventListener("click", function () {
+    toggleSupportPanel(false);
+    document.getElementById("wa-toggle").focus();
+  });
+  document.addEventListener("keydown", handleSupportKeydown);
 
   seedTasks();
   renderBoard();
